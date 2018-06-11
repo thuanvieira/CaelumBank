@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CaelumBank
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private Conta c;
+        private Cliente cliente;
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            cliente = new Cliente("Victor", 18, "053027887-13");
+            c = new ContaCorrente("1",cliente,2);
+            TBTitular.Text = c.Titular.Nome;
+            TBNumeroConta.Text = c.NumeroConta;
+            TBSaldoConta.Text = Convert.ToString(c.SaldoConta);
+        }
+
+        private void BTDepositar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string textoDigitado = TBValor.Text;
+                string novoValor = textoDigitado.Replace(".",",");
+                double valorOperacao = Convert.ToDouble(novoValor);
+                c.Deposita(valorOperacao);
+                TBSaldoConta.Text = Convert.ToString(c.SaldoConta);
+                MessageBox.Show("Depósito realizado com sucesso");
+                TBValor.Clear();
+            }
+            catch  (FormatException)
+            {
+                MessageBox.Show("O valor declarado está em formato inválido ou está em branco");
+            }
+        }
+
+        private void BTSacar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string textoDigitado = TBValor.Text;
+                string novoValor = textoDigitado.Replace(".", ",");
+                double valorOperacao = Convert.ToDouble(novoValor);
+                if (c.Saca(valorOperacao) == true)
+                    MessageBox.Show("Saque realizado com sucesso");
+                else
+                    MessageBox.Show("Saldo insuficiente");
+                TBSaldoConta.Text = Convert.ToString(c.SaldoConta);
+                TBValor.Clear();
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("O valor declarado está em formato inválido ou está em branco");
+            }
+        }
+    }
+}
