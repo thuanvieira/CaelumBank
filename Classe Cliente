@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CaelumBank
+{
+    public class Cliente
+    {
+        //Declarando as variáveis
+        public string Nome { get; set; }
+        public string Cpf;
+        public string rg;
+        public string endereco;
+        public int Idade { get; set; }
+        //------------------------------------------------------------------------------------
+
+        //Inserindo os construtores
+        public Cliente(string nome, int idade, string cpf)
+        {
+            this.Nome = nome;
+            this.Idade = idade;
+            this.Cpf = cpf;
+        }
+        //------------------------------------------------------------------------------------
+
+        //Criando métodos
+        public bool maiorIdade ()
+        {
+            if (Idade >= 18)
+            {
+                return true;
+            }
+            return false;
+        }
+        //------------------------------------------------------------------------------------
+    }
+}
