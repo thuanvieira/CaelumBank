@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CaelumBank
+{
+    public class Conta
+    {
+        //Declarando as variáveis
+        public string NumeroConta { get; protected set; }
+        public Cliente Titular { get; set; }
+        public double SaldoConta { get; protected set; }
+        public int Tipo { get; set; }
+        //------------------------------------------------------------------------------------
+
+        //Inserindo os construtores
+        public Conta (string numeroConta, Cliente titular, int tipo)
+        {
+            this.NumeroConta = numeroConta;
+            this.Titular = titular;
+            this.Tipo = tipo;
+        }
+        //------------------------------------------------------------------------------------
+
+        //Inserindo métodos na classe
+        public virtual void Deposita(double valor)
+        {
+            SaldoConta += valor;
+        }
+
+        public virtual bool Saca(double valor)
+        {
+            if (SaldoConta >= valor && Titular.maiorIdade())
+            {
+                SaldoConta -= valor;
+                return true;
+            }
+            else if (SaldoConta >= valor && !Titular.maiorIdade())
+            {
+                if (valor <= 200)
+                {
+                    SaldoConta -= valor;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void Transefere(double valor, Conta destino)
+        {
+            if (this.Saca(valor))
+            {
+                destino.Deposita(valor);
+            }
+        }
+        //------------------------------------------------------------------------------------
+    }
+}
